@@ -2,7 +2,7 @@ import * as UserActions from '../actions/userActions';
 
 const defaultState = {
     usersOrder: [12, 10, 11],
-    users: {
+    usersDetails: {
         10: {
             username: 'HLHLH',
             fullName: 'Adas Vialm',

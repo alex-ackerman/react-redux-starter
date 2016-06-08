@@ -4,7 +4,7 @@ import { getUserData } from '../action-creators/userActionCreators';
 
 const mapStateToProps = (state) => {
     return {
-        usersData: state.users.users,
+        usersDetails: state.users.usersDetails,
         usersOrder: state.users.usersOrder
     };
 };

@@ -5,7 +5,7 @@ class UserList extends Component {
         super(props);
     }
     render() {
-        const { usersOrder, usersData, onUserClick } = this.props;
+        const { usersOrder, usersDetails, onUserClick } = this.props;
         const getUser = (userId) => (
             <li key={userId}>
                 <a href="#" onClick={
@@ -14,7 +14,7 @@ class UserList extends Component {
                         onUserClick(userId);
                     }
                 }>
-                    { `${usersData[userId].fullName} <${usersData[userId].email}>` }
+                    { `${usersDetails[userId].fullName} <${usersDetails[userId].email}>` }
                 </a>
             </li>
         );
@@ -31,7 +31,7 @@ class UserList extends Component {
 
 UserList.propTypes = {
     usersOrder: PropTypes.arrayOf(PropTypes.number).isRequired,
-    usersData: PropTypes.object.isRequired,
+    usersDetails: PropTypes.object.isRequired,
     onUserClick: PropTypes.func.isRequired
 };
 

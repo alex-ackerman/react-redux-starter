@@ -7,10 +7,13 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 
 import ClickableUserList from './containers/ClickableUserList';
-import users from './reducers/usersReducer'
+import ConnectedUserDetailsPane from './containers/ConnectedUserDetailsPane';
+import users from './reducers/usersReducer';
+import display from './reducers/displayReducer';
 
 const reducers = combineReducers({
-    users
+    users,
+    display
 });
 const store = createStore(
     reducers,
@@ -20,6 +23,7 @@ const store = createStore(
 const App = () => (
     <div>
         <ClickableUserList />
+        <ConnectedUserDetailsPane />
     </div>
 );
 

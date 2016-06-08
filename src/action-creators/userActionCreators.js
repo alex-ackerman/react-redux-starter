@@ -2,7 +2,7 @@ import * as UserActions from '../actions/userActions';
 
 export const getUserData = (userId) => {
     return (dispatch, getState) => {
-        const userDetails = getState().users.users[userId];
+        const userDetails = getState().users.usersDetails[userId];
         const userDetailsPromise = new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(userDetails);
