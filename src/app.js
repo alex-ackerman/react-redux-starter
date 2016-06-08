@@ -1,20 +1,31 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { connect } from 'react-redux';
+import { Provider } from 'react-redux';
+import { combineReducers } from 'redux';
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
 
-class App extends Component {
+import ClickableUserList from './containers/ClickableUserList';
+import users from './reducers/usersReducer'
 
-    constructor(props) {
-        super(props);
-    }
+const reducers = combineReducers({
+    users
+});
+const store = createStore(
+    reducers,
+    applyMiddleware(thunk)
+);
 
-    render() {
-        return (
-            <div>
-                <h3>react redux starter</h3>
-            </div>
-        );
-    }
+const App = () => (
+    <div>
+        <ClickableUserList />
+    </div>
+);
 
-}
-
-ReactDOM.render(<App />, document.querySelector('main'));
+render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.querySelector('main')
+);
