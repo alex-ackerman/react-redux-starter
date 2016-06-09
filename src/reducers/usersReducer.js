@@ -23,8 +23,6 @@ const defaultState = {
 
 const usersReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case UserActions.DISPLAY_USER_DATA:
-            return displayUserData(state, action.payload);
         case UserActions.ADD_USER:
             return addUser(state, action.payload);
         case UserActions.REMOVE_USER:
