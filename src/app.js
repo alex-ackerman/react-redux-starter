@@ -3,17 +3,23 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import { combineReducers } from 'redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import FlagForm from './components/FlagForm';
 import LoginForm from './components/LoginForm';
 import DynamicForm from './components/DynamicForm';
 import { reducer as formReducer } from 'redux-form';
+import createLogger from 'redux-logger';
+
+const logger = createLogger();
 
 const reducers = combineReducers({
     form: formReducer
 });
 
-let store = createStore( reducers );
+let store = createStore( 
+    reducers,
+    applyMiddleware(logger)
+);
 
 const deferredSubmit = (data) => {
     const deferred = new Promise(resolve => {
@@ -51,12 +57,23 @@ class App extends Component {
                 type: 'email'
             }
         };
+        const loginInitialValues = {
+            username: 'zapp',
+            flag: {
+                val: 'ololo',
+                inheriting: {
+                    from: 'Not Inheriting',
+                    inheritAvailable: true,
+                    shouldInherit: false
+                }
+            }
+        };
         return (
             <div>
-                <LoginForm fields={['username', 'password', 'flag']} onSubmit={ deferredSubmit } />
+                <LoginForm fields={ ['username', 'password', 'flag'] } initialValues={loginInitialValues} onSubmit={ deferredSubmit } />
                 <DynamicForm
-                    fields={['lastName', 'name', 'email']}
-                    fieldsConfig={fieldsConfig}
+                    fields={ ['lastName', 'name', 'email'] }
+                    fieldsConfig={ fieldsConfig }
                     onSubmit={ deferredSubmit } />
             </div>
         );
@@ -78,3 +95,5 @@ ReactDOM.render(
         <App />
     </Provider>,
 document.querySelector('main'));
+
+window.store = store;

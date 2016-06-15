@@ -22,7 +22,7 @@ class LoginForm extends Component {
                     </div>
                     <div>
                         <label>Flag</label>
-                        <Flag value={{ val: 'LALAL', isOverriden: 'false' }} {...flag} />
+                        <Flag {...flag} />
                     </div>
                     <button type="submit">{ submitButtonLabel }</button>
                 </fieldset>

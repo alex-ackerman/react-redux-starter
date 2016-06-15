@@ -1,5 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 
+const stringToBool = (str) => {
+    switch (str) {
+        case 'true':
+            return true;
+        case 'false':
+            return false;
+        default:
+            throw new Error(`Unsupported bool string "${str}"`);
+    }
+};
+
 class InheritableFlag extends Component {
 
     constructor(props) {
@@ -8,30 +19,50 @@ class InheritableFlag extends Component {
 
     render() {
         const { onBlur, onChange, value, ...rest } = this.props;
-        const { val, isOverriden } = value;
+        const { val, inheriting } = value;
 
-        const getValue = event => {
+        const getValue = (event, shouldInherit) => {
             return {
                 val: this.refs.flagValue.value,
-                isOverriden: this.refs.isOverriden.value
+                inheriting: {
+                    from: this.refs.inheritFrom.value,
+                    inheritAvailable: true,
+                    shouldInherit
+                }
             };
         };
-
-        const override = () => {
-            this.refs.isOverriden.value = 'true';
+        const inheritClick = e => {
+            e.preventDefault();
+            onChange({
+                val: this.refs.flagValue.value,
+                inheriting: {
+                    from: 'will inherit soon...',
+                    inheritAvailable: false,
+                    shouldInherit: true
+                }
+            });
         };
+
+        const inheritButton = inheriting.inheritAvailable ? <button onClick={ inheritClick }>Inherit</button> : null;
 
         return (
             <span>
                 <input
+                    disabled={inheriting.shouldInherit}
                     ref="flagValue"
                     type="text"
-                    value={value.val}
-                    onChange={event => onChange( getValue(event) )}
-                    onBlur={event => onBlur( getValue(event) )}
+                    value={val}
+                    onChange={event => onChange( getValue(event, inheriting.shouldInherit) )}
+                    onBlur={event => onBlur( getValue(event, inheriting.shouldInherit) )}
                     {...rest} />
-                <input ref="isOverriden" type="hidden" value={value.isOverriden} />
-                <a href="#" onClick={override}>override</a>
+                <input 
+                    ref="inheritFrom" 
+                    type="text" 
+                    value={inheriting.from} 
+                    onChange={event => onChange( getValue(event, inheriting.shouldInherit) )}
+                    onBlur={event => onBlur( getValue(event, inheriting.shouldInherit) )}
+                    {...rest} />
+                { inheritButton }
             </span>
         );
     }
