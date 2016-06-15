@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Flag from './InheritableFlag';
 import { reduxForm } from 'redux-form';
 
 class LoginForm extends Component {
@@ -6,7 +7,7 @@ class LoginForm extends Component {
         super(props);
     }
     render() {
-        const { fields: { username, password }, handleSubmit, submitting } = this.props;
+        const { fields: { username, password, flag }, handleSubmit, submitting } = this.props;
         const submitButtonLabel = submitting ? 'Please Wait...' : 'Login';
         return (
             <form onSubmit={handleSubmit}>
@@ -18,6 +19,10 @@ class LoginForm extends Component {
                     <div>
                         <label>Password</label>
                         <input type="password" {...password} />
+                    </div>
+                    <div>
+                        <label>Flag</label>
+                        <Flag value={{ val: 'LALAL', isOverriden: 'false' }} {...flag} />
                     </div>
                     <button type="submit">{ submitButtonLabel }</button>
                 </fieldset>

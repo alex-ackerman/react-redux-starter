@@ -28,9 +28,7 @@ class DynamicForm extends Component {
 }
 DynamicForm.propTypes = {
     fields: PropTypes.object.isRequired,
-    fieldsConfig: PropTypes.objectOf(() => {
-        console.log(arguments);
-    }).isRequired
+    fieldsConfig: PropTypes.object.isRequired
 };
 
 export default reduxForm({
